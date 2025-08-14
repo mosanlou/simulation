@@ -1,538 +1,199 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="./style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-
-  
-<style>
-
-body {
-  background-color:aliceblue; 
-  background-repeat: no-repeat;
-  background-attachment: fixed;  
-  background-size: cover;
-  
-}
-
-<style>
-    div.gallery {
-      border: 1px solid #ccc;
-      
+  <meta charset="UTF-8">
+  <title>Video Modal Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
     }
-    
-    /*div.gallery:hover {
-      border: 1px solid #777;
-    }*/
-    
-    div.gallery img {
-      width: 100%;
-      height: auto;
-    }
-    h2 {
+     h2 {
       font-family:  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
       font-weight: 400px;
       font-size: 2rem;
     }
 
-    div.desc {
-      padding: 5px;
-      margin-top: 0;
-      margin-bottom: 1rem;
-      
-      font-optical-sizing: auto;
-      font-weight: 400px;
-      font-style: normal;
-      font-size: 16px; 
-      
-      text-align:left; 
-      color:black;
-      height: auto; 
-      box-sizing: border-box;
-      
-      display: block;
-      margin-block-start: 1em;
-      margin-block-end: 1em;
-      margin-inline-start: 0px;
-      margin-inline-end: 0px;
-      unicode-bidi: isolate;
-        
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
     }
-    div.small {
-      text-align:justify; 
-      font-size: 2rem; 
-      color: inherit;
-      font-family:'Open Sans', Arial, sans-serif;
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      border: 2px solid #ccc;
+      transition: border-color 0.3s;
+    }
+
+    .gallery img:hover {
+      border-color: #007BFF;
+    }
+
+    /* Modal overlay styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    #description {
+      text-align: left;
 
     }
-    
-    * { 
-      box-sizing: border-box;
+
+    .modal iframe {
+      width: 100%;
+      height: 100%;
+      max-width: 960px;
+      border: none;
     }
-    
-    .responsive {
-      padding: 0 6px;
-      float: left;
-      width: 24.99999%;
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 36px;
+      color: white;
+      cursor: pointer;
     }
-    
-      /* ✅ Tablet (768px and up) */
-    @media only screen and (max-width: 1024px) {
-      .responsive {
-        width: 49.99999%;
-        margin: 6px 0;
-       
-        
-      }
-    }
-    
-   /* ✅ Cellphone (767px and down) */
-    @media only screen and (max-width: 767px)  {
-      .responsive {
+
+    @media (max-width: 700px) {
+      .modal iframe {
         width: 100%;
-        font: size: 5rem; 
-        font-weight: 500;
-        
-       
+        height: 100%;
       }
     }
-    
-    .clearfix:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
-    </style>
-
-
-</style>
-<title>Simulation </title>
- <link rel="icon" type="image/x-icon" href="Simulation File/favicon-32x32.png">
+  </style>
 </head>
-
-
 <body>
 
+ <h2 style="text-align: center;">VR/Simulation <span style="color:darkblue">Career</span> Exploration</h2>
+  <div class="gallery" id="gallery" ></div>
 
-<!--Row 1-->
-
-<h2 style="text-align: center;">VR/Simulation <span style="color:darkblue">Career</span> Exploration</h2>
-<div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Aquaculture.png" alt="Aquaculture" width="600" height="300">
-      </a>
-    
-      <div class="desc"> Aquaculture is one of the fastest growing sectors in the world, 
-        accounting for 50% of the worlds total fish production. 
-         Experience a career takes you from working indoors and monitoring fingerlings to operating technology
-          beside a peaceful body of water.</div>
-    </div>
-  </div>
-  
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Carpenter.png" alt="Carpenter" width="600" height="400">
-      </a>
-      <div class="desc">Maneuvering through homes in various stages of construction, this experience allows
-        you to get an idea of the range of jobs a carpenter may encounter. 
-        Constructing a header in a new build home, to installing floor – an experience not to be missed!</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Farm Labourer.png" alt="Farm-Labourer" width="600" height="400">
-      </a>
-      <div class="desc">Farming is becoming more and more technologically advanced! Using an automated milking machine,
-        operating a drone for crop monitoring,
-         and animal care, is the type of variety that makes this
-          job an exciting part of the agricultural sector.</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Auto Mechanic.png" alt="Auto Mechanic" width="600" height="400">
-      </a>
-      <div class="desc">As a mechanic, you will work on many different vehicles! From an older car that needs a muffler 
-        replaced, to working on disconnecting the electrical system of an electric car,
-         this experience is diverse and highlights the variety in a mechanics day. </div>
-    </div>
-  </div>
-  
-  <div class="clearfix"></div>
-  
-  <div style="padding:6px;">
+  <!-- Modal structure -->
+  <div id="videoModal" class="modal">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <iframe id="youtubePlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     
   </div>
 
+  <script>
+  const videoData = [
+    { 
+      thumbnail: "New Simzone pic/Aquaculture.png", 
+      videoId: 'Gjx-P7vX7x0',
+      description: "Aquaculture is one of the fastest growing sectors in the world, accounting for 50% of the worlds total fish production.Experience a career takes you from working indoors and monitoring fingerlings to operating technology beside a peaceful body of water."
+    },
+    { 
+      thumbnail: 'New Simzone pic/Carpenter.png', 
+      videoId: 'm-KbdcPc_ro',
+      description: "Maneuvering through homes in various stages of construction, this experience allows you to get an idea of the range of jobs a carpenter may encounter. Constructing a header in a new build home, to installing floor – an experience not to be missed!"
+    },
+    { 
+      thumbnail: 'New Simzone pic/Farm Labourer.png', 
+      videoId: '6rL1apz3jfQ',
+      description: "Farming is becoming more and more technologically advanced! Using an automated milking machine,operating a drone for crop monitoring, and animal care, is the type of variety that makes this job an exciting part of the agricultural sector."
+    },
+     { 
+      thumbnail: "New Simzone pic/Auto Mechanic.png", 
+      videoId: 'Gjx-P7vX7x0',
+      description: "As a mechanic, you will work on many different vehicles! From an older car that needs a muffler replaced, to working on disconnecting the electrical system of an electric car, this experience is diverse and highlights the variety in a mechanics day."
+    },
+    { 
+      thumbnail: 'New Simzone pic/Carpenter.png', 
+      videoId: 'm-KbdcPc_ro',
+      description: "Explore the craft of carpentry.\nUnderstand essential woodworking tools.\nWatch practical building demonstrations."
+    },
+    { 
+      thumbnail: 'New Simzone pic/Farm Labourer.png', 
+      videoId: '6rL1apz3jfQ',
+      description: "Experience a day on the farm.\nLearn about planting and harvesting.\nSee teamwork in agricultural work."
+    },
+     { 
+      thumbnail: "New Simzone pic/Aquaculture.png", 
+      videoId: 'Gjx-P7vX7x0',
+      description: "Learn the basics of aquaculture.\nDiscover how fish farms operate.\nPerfect for beginners in seafood production."
+    },
+    { 
+      thumbnail: 'New Simzone pic/Carpenter.png', 
+      videoId: 'm-KbdcPc_ro',
+      description: "Explore the craft of carpentry.\nUnderstand essential woodworking tools.\nWatch practical building demonstrations."
+    },
+    { 
+      thumbnail: 'New Simzone pic/Farm Labourer.png', 
+      videoId: '6rL1apz3jfQ',
+      description: "Experience a day on the farm.\nLearn about planting and harvesting.\nSee teamwork in agricultural work."
+    },
+    // Duplicate items can also have descriptions
+  ];
 
-<!--Row 2-->
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Line cook_1.png" alt="Line Cook" width="450" height="350">
-      </a>
-      <div class="desc">A line cook is a kitchen staff member who prepares and 
-        cooks food at a specific station in a restaurant kitchen,
-         working under the direction of a chef. </div>
-    </div>
-  </div>
-  
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Registered Nurse.png" alt="Registurered Nurse" width="450" height="350">
-      </a>
-      <div class="desc">Support patients, and interact in a virtual health care environment.
-         Prioritize patient needs, and work to ensure that all responsibilities are taken care of before your shift ends.</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Industrial Electrician.png" alt="Industrial Electrician" width="450" height="350">
-      </a>
-      <div class="desc">Taking place in the new addition of a manufacturing facility, users will experience dark spaces and working at
-         heights as they work on making a Stub90, labelling wires, working with a PLC system, and more!</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./HVAC Technology.png" alt="HAVC Technician" width="450" height="350">
-      </a>
-      <div class="desc">Work from a metropolitan rooftop to assess the performance of heating and cooling units.
-         They will learn to troubleshoot broken units replacing and repairing fans, wires, refrigerant levels, and complete other
-         tasks an HVAC (Heating Ventilation and Air Conditioning) technician may face in a day on the job.</div>
-    </div>
-  </div>
-  
-  <div class="clearfix"></div>
-  
-  <div style="padding:6px;">
-    
-  </div>
+  const gallery = document.getElementById('gallery');
+  const modal = document.getElementById('videoModal');
+  const player = document.getElementById('youtubePlayer');
 
+  // Populate gallery with image + description
+  videoData.forEach((item, index) => {
+    const container = document.createElement('div');
+    container.style.textAlign = 'center';
+    container.style.maxWidth = '400px';
 
+    const img = document.createElement('img');
+    img.src = item.thumbnail;
+    img.alt = `Video ${index + 1}`;
+    img.onclick = () => openModal(item.videoId);
 
-<!--Row 3-->
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Heavy Equipment OPerator.png" alt="Heavy Equipment Operator" width="600" height="400">
-      </a>
-      <div class="desc">Operate a large excavator and must help remove rubble from a trench. 
-        They will need to work multiple levers inside the cabin of a large excavator,
-         collecting rocks using the bucket and dumping them into dump-truck.</div>
-    </div>
-  </div>
+    const desc = document.createElement('p');
+    desc.textContent = item.description;
+    desc.style.whiteSpace = 'pre-line'; // Allows \n to break lines
+    desc.style.fontSize = '16px';
+    desc.style.color = '#333';
+    desc.style.marginTop = '5px';
+    desc.style.textAlign="left";
+    desc.style.fontFamily='Open Sans';
+    desc.style.padding="5px"; 
+    desc.style.marginBottom= "2px"; 
+   
   
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Front Desk Attendent_1.png" alt="Front Desk Attendant" width="600" height="400">
-      </a>
-      <div class="desc">A Front Desk Attendant is the primary point of contact for guests or clients,
-         providing customer service and ensuring smooth operations at the front desk. They are the first point of contact for guests, visitors, and customers,</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Medical Lab Technician.png" alt="Medical Lab Technician" width="600" height="400">
-      </a>
-      <div class="desc">Performs a variety of laboratory tests and procedures to assist in the diagnosis
-         and treatment of diseases. They work under the supervision of a medical technologist or physician, 
-        analyzing samples like blood, and monitor the progression of conditions.</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Stick Welding.png" alt="Stick Welding" width="600" height="400">
-      </a>
-      <div class="desc">Learn about the basic components of stick welding in order to complete several welds around a construction site. 
-        They will experience working at heights on some scaffolds and will be 
-        challenged with some difficult angles, something commonly experienced by welders.</div>
-    </div>
-  </div>
-  
-  <div class="clearfix"></div>
-  
-  <div style="padding:6px;">
-    
-  </div>
+      
 
 
+    container.appendChild(img);
+    container.appendChild(desc);
+    gallery.appendChild(container);
+  });
 
-<!--Row 4-->
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./CNC Operator.png" alt="CNC Operator" width="600" height="400">
-      </a>
-      <div class="desc"> Work on a large CNC vertical milling machine. The explorer will learn to read design drafts and then program 
-        the functionality of the machine in order to fill the order.</div>
-    </div>
-  </div>
+  function openModal(videoId) {
+    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+    player.src = embedUrl;
+    modal.style.display = 'flex';
+  }
 
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Sheet Metal Worker.png" alt="Sheet Metal Worker" width="600" height="400">
-      </a>
-      <div class="desc">Assemble and then install metal ducts in a small home workshop. The explorer will learn about manipulating 
-        sheet metal using guillotines and bending brakes to cut and bend sheet metal into the required sizes before heading over 
-        to the job site to install things. </div>
-    </div>
-  </div>
-  
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Construction Welding.png" alt="Construction Welding" width="600" height="400">
-      </a>
-      <div class="desc">Try three popular types of welding while working on the construction site of a building.
-         The explorer will learn all about MIG, TIG, and Stick welding as they work their way up the
-         construction site preforming a range of welding tasks.</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Continuing Care Aide.png" alt="Continuing Care Aide lite" width="600" height="400">
-      </a>
-      <div class="desc"> provides ongoing care and support to individuals with disabilities or chronic
-         illnesses in various settings, such as home health, nursing homes, 
-        or assisted living facilities. They assist with daily living activities, personal care, and provide companionship. <div class="small"> </div></div>
-    </div>
-  </div>
-  
+  function closeModal() {
+    player.src = '';
+    modal.style.display = 'none';
+  }
 
-  
-  <div class="clearfix"></div>
-  
-  <div style="padding:6px;">
-    
-  </div>
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeModal();
+  });
 
-
-
-<!--Row 5 -->
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Hydroponics.png" alt="Hydroponics" width="600" height="400">
-      </a>
-      <div class="desc">Do we know how some of our tomatoes end up in the grocery store? Working in a controlled hydroponics greenhouse,
-         you will get an idea of how they grow – from seed to table.
-         A career that is seen as a major part of the future of food security! </div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Steel Production Worker.png" alt="Steel Production Worker" width="600" height="400">
-      </a>
-      <div class="desc">Work on a large oxygen furnace which is used to produce molten steel from iron. The explorer 
-        will begin the experience in a control room overlooking the large production floor where 
-        they will prepare for the next stages of steel production.</div>
-    </div>
-  </div>
-
-
-
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Manual Machinist.png" alt="Manual Machinist" width="600" height="400">
-      </a>
-      <div class="desc"> Learn the process of working on a large manual lathe and manual milling machine.
-         They will be tasked with reading and interpreting design drafts, 
-        cleaning the workspace, setting up, and operating various machines.</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Millwright.png" alt="Millwright" width="600" height="400">
-      </a>
-      <div class="desc">Working in a bottling facility, you will work on executing preventative and reactive maintenance on motors;
-         as well as working to get a production line back up and going.
-         A millwright does a variety of tasks each day, and this experience is no exception!</div>
-    </div>
-  </div>
-  
-  <div class="clearfix"></div>
-  
-  <div style="padding:6px;">
-    
-  </div>
-
-
-
-<!--Row 6-->
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./mining engineer.png" alt="Mining Engineer" width="600" height="400">
-      </a>
-      <div class="desc">Participants experience some of the planning phases of building a mine as they learn about mine types.
-         They will learn to pilot a drone, load blast caps and more in order to get the mine underway. </div>
-    </div>
-  </div>
-  
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Mining Michine Operator.png" alt="Mining Michine Operator" width="600" height="400">
-      </a>
-      <div class="desc">Learn to drive a cable shovel excavator. 
-        The explorer will use the cable shovel navigating to various sites of the mine to 
-        fill haul trucks with material from inside the mine which contains hematite rock.</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Pipe Fitter.png" alt="Pipe Fitter" width="600" height="400">
-      </a>
-      <div class="desc">Learn to measure and cut large water pipes and help with the 
-        installation process. The simulation takes place at an outdoor construction site for a new hydroelectric dam. 
-        The explorer will need to read and interpret the blueprints in this simulation to cut and fit pipes to the correct length.</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Plant Geneticist.png" alt="Plant Geneticist" width="600" height="400">
-      </a>
-      <div class="desc">Discover a career that will take you from field to laboratory, as you look to analyze and isolate
-         genomes to optimize soy beans for growth using less environmental resources.</div>
-    </div>
-  </div>
-  
-  <div class="clearfix"></div>
-  
-  <div style="padding:6px;">
-    
-  </div>
-
-
-
-
-<!--Row 7-->
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Process Engineer.png" alt="Process Engineer" width="600" height="400">
-      </a>
-      <div class="desc">Work in a control room to monitor and adjust the variables of four different machines. 
-        These machines include hammer crushers, magnetic separators, 
-        froth flotation cells, and Disc pelletizers. Participants must keep the production quality of iron ore pellets up.</div>
-    </div>
-  </div>
-  
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Quality Assurance.png" alt="Quality Assurance" width="600" height="400">
-      </a>
-      <div class="desc">This simulation depicts some of the activities of control,
-         evaluation and the regulatory aspects of food processing in the large scale. Testing for bacteria, 
-         and sensory analysis of a new product is just a part of what this career entails!</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Residential Electrician.png" alt="Residential Electrician" width="600" height="400">
-      </a>
-      <div class="desc">This simulation depicts some of the activities of control, evaluation and the regulatory aspects of food processing. 
-        Testing for bacteria, and sensory analysis of a new product is just a part of what this career entails!</div>
-    </div>
-  </div>
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Robatic Welding Operator.png" alt="Robotic welding Operator" width="600" height="400">
-      </a>
-      <div class="desc"> Work in a facility that manufactures parts for wind turbines. Learn to set-up and program robotic welding arms.
-         Participants must ensure that the welding production process goes to plan.</div>
-    </div>
-  </div>
-  
-  <div class="clearfix"></div>
-  
-  <div style="padding:6px;">
-    
-  </div>
-
-
-
-
-
-<!--Row 8-->
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Robotic Technician.png" alt="Robotic Technician" width="600" height="400">
-      </a>
-      <div class="desc">Perform maintenance and run diagnostics on broken robots in order to repair them. They will also need to 
-        submit performance logs and adjust line speeds as you work to ensure everything is running effectively. </div>
-    </div>
-  </div>
-  
-  
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="#">
-        <img src="./Room Attendent.png" alt="Room Attendant" width="600" height="400">
-      </a>
-      <div class="desc">A room attendant, also known as a housekeeper, is a professional who cleans and maintains hotel rooms, guest areas,
-         and other common areas in a hotel.</div>
-    </div>
-  </div>
-  
-
-  
- 
-  
-  <div class="clearfix"></div>
-  
-  <div style="padding:6px;">
-    
-  </div>
-
-  
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
 
 
 </body>
 </html>
+
+
