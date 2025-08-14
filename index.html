@@ -116,50 +116,7 @@ body {
 
 
 <body>
-<script>
-    const videoData = [
-      { thumbnail: "./Aquaculture.png", videoId: 'Gjx-P7vX7x0' },
-      { thumbnail: './Carpenter.png', videoId: 'm-KbdcPc_ro' },
-      { thumbnail: './Farm Labourer.png', videoId: '6rL1apz3jfQ' },
-      // ... add more entries here
-    ];
 
-    const gallery = document.getElementById('gallery');
-    const modal = document.getElementById('videoModal');
-    const player = document.getElementById('youtubePlayer');
-
-    // Populate gallery
-    videoData.forEach((item, index) => {
-      const img = document.createElement('img');
-      img.src = item.thumbnail;
-      img.alt = `Video ${index + 1}`;
-      img.onclick = () => openModal(item.videoId);
-      gallery.appendChild(img);
-    });
-
-    // Open modal and load YouTube video
-    function openModal(videoId) {
-      const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
-      player.src = embedUrl;
-      modal.style.display = 'flex';
-    }
-
-    // Close modal and stop video
-    function closeModal() {
-      player.src = '';
-      modal.style.display = 'none';
-    }
-
-    // Optional: close modal by clicking outside iframe
-    modal.addEventListener('click', function (e) {
-      if (e.target === modal) closeModal();
-    });
-
-    // Optional: close with Esc key
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeModal();
-    });
-  </script>
   
 
 
@@ -581,3 +538,4 @@ body {
 
 </body>
 </html>
+
