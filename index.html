@@ -1,200 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Video Modal Gallery</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-     h2 {
-      font-family:  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-      font-weight: 400px;
-      font-size: 2rem;
-    }
+<title>YouTube Video Autostop</title>
+<style>
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
 
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
 
-    .gallery img {
-      width: 100%;
-      height: auto;
-      cursor: pointer;
-      border: 2px solid #ccc;
-      transition: border-color 0.3s;
-    }
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
 
-    .gallery img:hover {
-      border-color: #007BFF;
-    }
-
-    /* Modal overlay styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      justify-content: center;
-      align-items: center;
-    }
-    #description {
-      text-align: left;
-
-    }
-
-    .modal iframe {
-      width: 100%;
-      height: 100%;
-      max-width: 960px;
-      border: none;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 36px;
-      color: white;
-      cursor: pointer;
-    }
-
-    @media (max-width: 700px) {
-      .modal iframe {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  </style>
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
 
- <h2 style="text-align: center;">VR/Simulation <span style="color:darkblue">Career</span> Exploration</h2>
-  <div class="gallery" id="gallery" ></div>
+<button onclick="openModal()">Open Video Modal</button>
 
-  <!-- Modal structure -->
-  <div id="videoModal" class="modal">
-    <span class="close-btn" onclick="closeModal()">&times;</span>
-    <iframe id="youtubePlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    
+<div id="videoModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal()">&times;</span>
+    <div id="player"></div>
   </div>
+</div>
 
-  <script>
-  const videoData = [
-    { 
-      thumbnail: "./Aquaculture.png", 
-      videoId: 'Gjx-P7vX7x0',
-      description: "Aquaculture is one of the fastest growing sectors in the world, accounting for 50% of the worlds total fish production.Experience a career takes you from working indoors and monitoring fingerlings to operating technology beside a peaceful body of water."
-    },
-    { 
-      thumbnail: './Carpenter.png', 
-      videoId: 'm-KbdcPc_ro',
-      description: "Maneuvering through homes in various stages of construction, this experience allows you to get an idea of the range of jobs a carpenter may encounter. Constructing a header in a new build home, to installing floor – an experience not to be missed!"
-    },
-    { 
-      thumbnail: './Farm Labourer.png', 
-      videoId: '6rL1apz3jfQ',
-      description: "Farming is becoming more and more technologically advanced! Using an automated milking machine,operating a drone for crop monitoring, and animal care, is the type of variety that makes this job an exciting part of the agricultural sector."
-    },
-     { 
-      thumbnail: "./Auto Mechanic.png", 
-      videoId: 'Gjx-P7vX7x0',
-      description: "As a mechanic, you will work on many different vehicles! From an older car that needs a muffler replaced, to working on disconnecting the electrical system of an electric car, this experience is diverse and highlights the variety in a mechanics day."
-    },
-    { 
-      thumbnail: './Carpenter.png', 
-      videoId: 'm-KbdcPc_ro',
-      description: "Explore the craft of carpentry.\nUnderstand essential woodworking tools.\nWatch practical building demonstrations."
-    },
-    { 
-      thumbnail: './Farm Labourer.png', 
-      videoId: '6rL1apz3jfQ',
-      description: "Experience a day on the farm.\nLearn about planting and harvesting.\nSee teamwork in agricultural work."
-    },
-     { 
-      thumbnail: "./Aquaculture.png", 
-      videoId: 'Gjx-P7vX7x0',
-      description: "Learn the basics of aquaculture.\nDiscover how fish farms operate.\nPerfect for beginners in seafood production."
-    },
-    { 
-      thumbnail: './Carpenter.png', 
-      videoId: 'm-KbdcPc_ro',
-      description: "Explore the craft of carpentry.\nUnderstand essential woodworking tools.\nWatch practical building demonstrations."
-    },
-    { 
-      thumbnail: './Farm Labourer.png', 
-      videoId: '6rL1apz3jfQ',
-      description: "Experience a day on the farm.\nLearn about planting and harvesting.\nSee teamwork in agricultural work."
-    },
-    // Duplicate items can also have descriptions
-  ];
+<script>
+  var player; // Global variable to hold the YouTube player object
 
-  const gallery = document.getElementById('gallery');
-  const modal = document.getElementById('videoModal');
-  const player = document.getElementById('youtubePlayer');
+  // This function creates an <iframe> (and YouTube player)
+  // after the API code downloads.
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '390',
+      width: '640',
+      videoId: 'M7lc1UVf-VE', // Replace with your YouTube video ID
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
 
-  // Populate gallery with image + description
-  videoData.forEach((item, index) => {
-    const container = document.createElement('div');
-    container.style.textAlign = 'center';
-    container.style.maxWidth = '400px';
+  // The API will call this function when the video player is ready.
+  function onPlayerReady(event) {
+    // You can add code here to automatically play the video on modal open if needed
+    // event.target.playVideo();
+  }
 
-    const img = document.createElement('img');
-    img.src = item.thumbnail;
-    img.alt = `Video ${index + 1}`;
-    img.onclick = () => openModal(item.videoId);
+  // The API calls this function when the player's state changes.
+  function onPlayerStateChange(event) {
+    // Optional: Add logic based on player state changes (e.g., video ended)
+  }
 
-    const desc = document.createElement('p');
-    desc.textContent = item.description;
-    desc.style.whiteSpace = 'pre-line'; // Allows \n to break lines
-    desc.style.fontSize = '16px';
-    desc.style.color = '#333';
-    desc.style.marginTop = '5px';
-    desc.style.textAlign="left";
-    desc.style.fontFamily='Open Sans';
-    desc.style.padding="5px"; 
-    desc.style.marginBottom= "2px"; 
-   
-  
-      
-
-
-    container.appendChild(img);
-    container.appendChild(desc);
-    gallery.appendChild(container);
-  });
-
-  function openModal(videoId) {
-    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
-    player.src = embedUrl;
-    modal.style.display = 'flex';
+  function openModal() {
+    document.getElementById('videoModal').style.display = 'block';
+    player.playVideo(); // Start playing when modal opens
   }
 
   function closeModal() {
-    player.src = '';
-    modal.style.display = 'none';
+    document.getElementById('videoModal').style.display = 'none';
+    player.stopVideo(); // Stop the video when modal closes
   }
 
-  modal.addEventListener('click', function (e) {
-    if (e.target === modal) closeModal();
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeModal();
-  });
+  // This code loads the IFrame Player API code asynchronously.
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 </script>
-
 
 </body>
 </html>
-
-
-
