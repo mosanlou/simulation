@@ -126,7 +126,7 @@ body {
 <div class="responsive">
     <div class="gallery">
       <a target="_blank" href="#">
-        <img src="./Aquaculture.png" alt="Aquaculture" width="600" height="300">
+        <img src="./Aquaculture.png" alt="Aquaculture" width="600" height="400" onclick="openYouTubePopup()">
       </a>
     
       <div class="desc"> Aquaculture is one of the fastest growing sectors in the world, 
@@ -134,18 +134,32 @@ body {
          Experience a career takes you from working indoors and monitoring fingerlings to operating technology
           beside a peaceful body of water.</div>
     </div>
+   <script>
+    function openYouTubePopup() {
+      const url = 'https://www.youtube.com/embed/Gjx-P7vX7x0';
+      const features = 'width=640,height=360,resizable=yes';
+      window.open(url, 'YouTubePopup', features);
+    }
+  </script>
   </div>
   
   
   <div class="responsive">
     <div class="gallery">
       <a target="_blank" href="#">
-        <img src="./Carpenter.png" alt="Carpenter" width="600" height="400">
+        <img src="./Carpenter.png" alt="Carpenter" width="600" height="400" onclick="openYouTubePopup1()>
       </a>
-      <div class="desc">Maneuvering through homes in various stages of construction, this experience allows
+      <div class="desc"> Maneuvering through homes in various stages of construction, this experience allows
         you to get an idea of the range of jobs a carpenter may encounter. 
         Constructing a header in a new build home, to installing floor – an experience not to be missed!</div>
     </div>
+    <script>
+    function openYouTubePopup1() {
+      const url = 'https://www.youtube.com/embed/m-KbdcPc_ro?autoplay=1&mute=0';
+      const features = 'width=640,height=360,resizable=yes';
+      window.open(url, 'YouTubePopup', features);
+    }
+  </script>
   </div>
   
   <div class="responsive">
@@ -538,4 +552,5 @@ body {
 
 </body>
 </html>
+
 
